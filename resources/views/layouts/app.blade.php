@@ -21,7 +21,11 @@
     <div id="page-wrapper" class="gray-bg">
         @include('navbar.index')
         <div class="wrapper wrapper-content">
-            @yield('content')
+            <div class="container">
+                <div class="row">
+                    @yield('content')
+                </div>
+            </div>
         </div>
         @include('footer.index')
     </div>
@@ -36,6 +40,6 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('/js/inspinia.js') }}"></script>
 <script src="{{ asset('/js/plugins/pace/pace.min.js') }}"></script>
-
+@yield('script')
 </body>
 </html>
