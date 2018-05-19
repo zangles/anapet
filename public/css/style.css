@@ -198,11 +198,11 @@ h5 {
   float: left;
 }
 .navbar-form-custom {
-  float: left;
-  height: 50px;
-  padding: 0;
-  width: 200px;
-  display: block;
+  /*float: left;*/
+  height: 16px;
+  padding-left: 150px;
+  width: 50%;
+  display: inline-block;
 }
 .navbar-form-custom .form-group {
   margin-bottom: 0;
@@ -214,7 +214,7 @@ h5 {
   background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
   border: medium none;
   font-size: 14px;
-  height: 60px;
+  height: 17px;
   margin: 0;
   z-index: 2000;
 }
@@ -4508,9 +4508,12 @@ body.mini-navbar.fixed-sidebar .logo-element {
 /* CONTACTS */
 .contact-box {
   background-color: #ffffff;
-  border: 1px solid #e7eaec;
+  border: 1px solid #01cdc6;
   padding: 20px;
   margin-bottom: 20px;
+}
+.contact-box h3 {
+  color: #00977b;
 }
 .contact-box > a {
   color: inherit;

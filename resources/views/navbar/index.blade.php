@@ -7,13 +7,14 @@
             <img src="{{ asset('img/logo-small.png') }}" alt="" style="max-height: 50px">
             <a href="#" class="navbar-brand">{{ config('app.name', 'Laravel') }}</a>
         </div>
+
         <div class="navbar-collapse collapse" id="navbar">
             <ul class="nav navbar-nav">
-                <li class="active">
-                    <a aria-expanded="false" role="button" href="layouts.html">Dashboard</a>
+                <li {{ Request::is('/*') ? 'class=active' : '' }}>
+                    <a aria-expanded="false" role="button" href="{{ route('home') }}">Dashboard</a>
                 </li>
-                <li>
-                    <a aria-expanded="false" role="button" href="#"><i class="fa fa-users"></i> Contacts</a>
+                <li {{ Request::is('contacts*') ? 'class=active' : '' }} >
+                    <a aria-expanded="false" role="button" href="{{ route('contacts.index') }}"><i class="fa fa-users"></i> Contacts</a>
                 </li>
                 <li>
                     <a aria-expanded="false" role="button" href="#"><i class="fa fa-calendar"></i>Turns</a>
