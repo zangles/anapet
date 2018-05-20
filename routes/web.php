@@ -16,4 +16,5 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::resource('contacts', 'ContactController');
+    Route::resource('turns', 'TurnController');
 });

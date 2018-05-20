@@ -201,7 +201,7 @@ h5 {
   /*float: left;*/
   height: 16px;
   padding-left: 150px;
-  width: 50%;
+  /*width: 50%;*/
   display: inline-block;
 }
 .navbar-form-custom .form-group {
@@ -8391,4 +8391,8 @@ body.md-skin {
   #page-wrapper {
     margin: 0;
   }
+}
+
+.turnListItem {
+  margin: 10px;
 }
