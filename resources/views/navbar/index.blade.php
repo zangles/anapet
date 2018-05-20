@@ -16,8 +16,8 @@
                 <li {{ Request::is('contacts*') ? 'class=active' : '' }} >
                     <a aria-expanded="false" role="button" href="{{ route('contacts.index') }}"><i class="fa fa-users"></i> Contacts</a>
                 </li>
-                <li>
-                    <a aria-expanded="false" role="button" href="#"><i class="fa fa-calendar"></i>Turns</a>
+                <li {{ Request::is('turns*') ? 'class=active' : '' }}>
+                    <a aria-expanded="false" role="button" href="{{ route('turns.index') }}"><i class="fa fa-calendar"></i>Turns</a>
                 </li>
                 <li>
                     <a aria-expanded="false" role="button" href="#"><i class="fa fa-gears"></i>Config</a>

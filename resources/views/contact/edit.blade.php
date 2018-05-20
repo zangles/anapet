@@ -37,13 +37,13 @@
                 </div>
             </div>
             <div class="ibox-footer">
-                <button class="btn btn-primary"> <i class="fa fa-check"></i> Save</button>
-                <button class="btn btn-danger" id="deleteContact"> <i class="fa fa-trash"></i> Delete</button>
-                <form action="{{ route('contacts.destroy', $contact) }}" method="post" style="display: none" id="deleteForm">
-                    @csrf
-                    @method('DELETE')
-                </form>
+                <button class="btn btn-primary"> <i class="fa fa-check"></i> Save Contact</button>
+                <button class="btn btn-danger" id="deleteContact"> <i class="fa fa-trash"></i> Delete Contact</button>
             </div>
+        </form>
+        <form action="{{ route('contacts.destroy', $contact) }}" method="post" style="display: none" id="deleteForm">
+            @csrf
+            @method('DELETE')
         </form>
     </div>
 @endsection

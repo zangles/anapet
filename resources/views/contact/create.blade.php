@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="ibox-footer">
-                <button class="btn btn-primary"> <i class="fa fa-check"></i> Save</button>
+                <button class="btn btn-primary"> <i class="fa fa-check"></i> Save Contact</button>
             </div>
         </form>
     </div>

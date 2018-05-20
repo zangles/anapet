@@ -13,4 +13,9 @@ class Contact extends Model
         'phone',
         'description'
     ];
+
+    public function turn()
+    {
+        return $this->hasMany('App\Turn');
+    }
 }

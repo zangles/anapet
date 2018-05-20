@@ -7,24 +7,36 @@
             {{ $message }}
         </div>
     @endif
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="ibox float-e-margins" >
             <div class="ibox-title">
                 <h5><i class="fa fa-user"></i> Contacts Info</h5>
-                <a href="{{ route('contacts.edit', $contact) }}" class="pull-right btn btn-xs btn-success"><i class="fa fa-pencil"></i> Edit</a>
+                <a href="{{ route('contacts.edit', $contact) }}" class="pull-right btn btn-xs btn-info"><i class="fa fa-pencil"></i> Edit Contact</a>
             </div>
             <div class="ibox-content">
                 <div class="content">
                     <div class="row">
                         <div class="col-md-12">
-                            <address>
-                                <strong>Name:</strong> {{ $contact->name }}<br>
-                                <strong>Address:</strong> {{ $contact->address }}<br>
-                                <strong>Email:</strong> {{ $contact->email }}<br>
-                                <strong>Phone:</strong> {{ $contact->phone }}<br>
-                                <strong>Description:</strong><br>
-                                {{ $contact->description }}
-                            </address>
+                            <dl class="dl-horizontal">
+                                <dt>Name:</dt>
+                                <dd>{{ $contact->name }}</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>Address:</dt>
+                                <dd>{{ $contact->address }}</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>Email:</dt>
+                                <dd>{{ $contact->email }}</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>Phone:</dt>
+                                <dd>{{ $contact->phone }}</dd>
+                            </dl>
+                            <dl class="dl-horizontal">
+                                <dt>Description:</dt>
+                                <dd>{{ $contact->description }}</dd>
+                            </dl>
                         </div>
                     </div>
                 </div>
@@ -34,13 +46,19 @@
     <div class="col-md-4">
         <div class="ibox float-e-margins" >
             <div class="ibox-title">
+                <a id="newContact" href="{{ route('turns.create',['contact' => $contact]) }}" class="pull-right btn btn-xs btn-success"><i class="fa fa-plus"></i> New turn</a>
                 <h5><i class="fa fa-history"></i> Turns History</h5>
             </div>
             <div class="ibox-content">
                 <div class="content">
                     <div class="row">
                         <div class="col-md-12">
-                            <br><br><br><br><br>
+                            @foreach($contact->turn()->orderBy('start')->get() as $turn)
+                                <a href="{{ route('turns.show', $turn) }}">
+                                    <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $turn->start)->format('d/m/Y') }}
+                                    <br>
+                                </a>
+                            @endforeach
                         </div>
                     </div>
                 </div>
