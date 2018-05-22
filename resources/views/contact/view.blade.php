@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="ibox float-e-margins" >
             <div class="ibox-title">
                 <a id="newContact" href="{{ route('turns.create',['contact' => $contact]) }}" class="pull-right btn btn-xs btn-success"><i class="fa fa-plus"></i> New turn</a>
@@ -58,6 +58,25 @@
                                     <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $turn->start)->format('d/m/Y') }}
                                     <br>
                                 </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="ibox float-e-margins" >
+            <div class="ibox-title">
+                <a id="newContact" href="{{ route('pets.create',['contact' => $contact]) }}" class="pull-right btn btn-xs btn-success"><i class="fa fa-plus"></i> New Pet</a>
+                <h5><i class="fa fa-paw"></i> Pets</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @foreach($contact->pet as $pet)
+                                @include('pet.partials.card',$pet)
                             @endforeach
                         </div>
                     </div>

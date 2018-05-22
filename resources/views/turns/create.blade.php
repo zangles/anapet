@@ -63,7 +63,7 @@
                                     <div class="input-group clockpicker" data-autoclose="true">
                                         <input type="text" class="form-control" id="hour">
                                         <span class="input-group-addon">
-                                        <span class="fa fa-clock-o"></span>
+                                        <span class="fa fa-clock"></span>
                                         </span>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                                     <div class="input-group clockpicker2" data-autoclose="true">
                                         <input type="text" class="form-control" id="hour2">
                                         <span class="input-group-addon">
-                                        <span class="fa fa-clock-o"></span>
+                                        <span class="fa fa-clock"></span>
                                         </span>
                                     </div>
                                 </div>

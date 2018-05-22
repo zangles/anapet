@@ -8396,3 +8396,15 @@ body.md-skin {
 .turnListItem {
   margin: 10px;
 }
+
+.dl-horizontal dt {
+  width:90px;
+}
+
+.dl-horizontal dd {
+  margin-left: 110px
+}
+
+dl {
+  margin-bottom: 10px;
+}
