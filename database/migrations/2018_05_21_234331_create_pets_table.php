@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTurnsTable extends Migration
+class CreatePetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateTurnsTable extends Migration
      */
     public function up()
     {
-        Schema::create('turns', function (Blueprint $table) {
+        Schema::create('pets', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('contact_id');
-            $table->dateTime('start');
-            $table->dateTime('end');
-            $table->text('comments')->nullable();
-            $table->text('review')->nullable();
-            $table->boolean('finished')->nullable();
+            $table->string('name');
+            $table->string('sex', 1)->nullable();
+            $table->string('desexed', 1)->nullable();
+            $table->string('breed')->nullable();
+            $table->integer('age')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
@@ -34,6 +35,6 @@ class CreateTurnsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('turns');
+        Schema::dropIfExists('pets');
     }
 }

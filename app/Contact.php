@@ -18,4 +18,9 @@ class Contact extends Model
     {
         return $this->hasMany('App\Turn');
     }
+
+    public function pet()
+    {
+        return $this->hasMany('App\Pet');
+    }
 }
