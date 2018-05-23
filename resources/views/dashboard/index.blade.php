@@ -24,7 +24,7 @@
                         </div>
                         <div class="ibox-content">
                             <h1 class="no-margins">{{ $totalTurns1Month }}</h1>
-                            <div class="stat-percent font-bold text-info">{{ $porcentajeTurnos }}% <i class="fa @if($porcentajeTurnos >=0) fa-level-up @else fa-level-down @endif"></i></div>
+                            <div class="stat-percent font-bold text-info">{{ $porcentajeTurnos }}% <i class="fa @if($porcentajeTurnos >=0) fa-level-up-alt @else fa-level-down-alt @endif"></i></div>
                             <small>New turns</small>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                         </div>
                         <div class="ibox-content">
                             <h1 class="no-margins">{{ $totalContacts1Month }}</h1>
-                            <div class="stat-percent font-bold text-navy">{{ $porcentajeContactos }}% <i class="fa @if($porcentajeTurnos >=0) fa-level-up @else fa-level-down @endif"></i></div>
+                            <div class="stat-percent font-bold text-navy">{{ $porcentajeContactos }}% <i class="fa @if($porcentajeTurnos >=0) fa-level-up-alt @else fa-level-down-alt @endif"></i></div>
                             <small>New contacts</small>
                         </div>
                     </div>
