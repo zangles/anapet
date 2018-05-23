@@ -61,10 +61,18 @@
 @section('script')
     <script>
         $(document).ready(function(){
-            $(".deleteTurn").click(function(){
-                if(confirm('Are you sure you want to delete this turn?')) {
+            $('.deleteTurn').click(function () {
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover it!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#F5475A",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                }, function () {
                     $('#deleteForm').submit();
-                }
+                });
                 return false;
             });
         });

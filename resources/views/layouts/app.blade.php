@@ -14,6 +14,7 @@
     <link href="{{ asset('/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plugins/boostrap-toggle-master/bootstrap2-toggle.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
     @yield('css')
 </head>
 
@@ -39,6 +40,7 @@
 <script src="{{ asset('/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
 <script src="{{ asset('/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('js/plugins/boostrap-toggle-master/bootstrap2-toggle.js') }}"></script>
+<script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('/js/inspinia.js') }}"></script>

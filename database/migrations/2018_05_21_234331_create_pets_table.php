@@ -23,6 +23,8 @@ class CreatePetsTable extends Migration
             $table->integer('age')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
+
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
     }
 

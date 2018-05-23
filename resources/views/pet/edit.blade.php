@@ -73,12 +73,20 @@
 @section('script')
     <script>
         $(document).ready(function(){
-            $("#delete").click(function(){
-                if(confirm('Are you sure you want delete this pet?')) {
+            $('#delete').click(function () {
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover it!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#F5475A",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                }, function () {
                     $('#deleteForm').submit();
-                }
+                });
                 return false;
-            })
+            });
         });
     </script>
 @endsection

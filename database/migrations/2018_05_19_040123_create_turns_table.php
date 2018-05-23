@@ -22,6 +22,8 @@ class CreateTurnsTable extends Migration
             $table->text('review')->nullable();
             $table->boolean('finished')->nullable();
             $table->timestamps();
+
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
     }
 
