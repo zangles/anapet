@@ -6,7 +6,7 @@
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <span class="label label-success pull-right">Monthly</span>
+                            <span class="label label-success pull-right">Last Month</span>
                             <h5>Income</h5>
                         </div>
                         <div class="ibox-content">
@@ -19,12 +19,12 @@
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <span class="label label-info pull-right">Annual</span>
+                            <span class="label label-info pull-right">Last Month</span>
                             <h5>Turns</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">2,453</h1>
-                            <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                            <h1 class="no-margins">{{ $totalTurns1Month }}</h1>
+                            <div class="stat-percent font-bold text-info">{{ $porcentajeTurnos }}% <i class="fa @if($porcentajeTurnos >=0) fa-level-up @else fa-level-down @endif"></i></div>
                             <small>New turns</small>
                         </div>
                     </div>
@@ -32,12 +32,12 @@
                 <div class="col-lg-4">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <span class="label label-primary pull-right">Today</span>
+                            <span class="label label-primary pull-right">Last Month</span>
                             <h5>Contacts</h5>
                         </div>
                         <div class="ibox-content">
-                            <h1 class="no-margins">529</h1>
-                            <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                            <h1 class="no-margins">{{ $totalContacts1Month }}</h1>
+                            <div class="stat-percent font-bold text-navy">{{ $porcentajeContactos }}% <i class="fa @if($porcentajeTurnos >=0) fa-level-up @else fa-level-down @endif"></i></div>
                             <small>New contacts</small>
                         </div>
                     </div>
