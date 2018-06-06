@@ -8,7 +8,7 @@ class TurnType extends Model
 {
     protected $fillable = ['name'];
 
-    const TYPE_1_CLASS = 'event-inportant';
+    const TYPE_1_CLASS = 'event-important';
     const TYPE_2_CLASS = 'event-success';
     const TYPE_3_CLASS = 'event-warning';
     const TYPE_4_CLASS = 'event-inverse';
