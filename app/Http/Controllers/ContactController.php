@@ -42,7 +42,7 @@ class ContactController extends Controller
         $contact->save();
         $request->session()->flash('message', 'success|Contact Created!');
 
-        return redirect()->route('contacts.index');
+        return redirect()->route('contacts.show', $contact);
     }
 
     /**

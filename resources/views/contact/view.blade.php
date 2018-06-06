@@ -37,6 +37,10 @@
                                 <dt>Description:</dt>
                                 <dd>{{ $contact->description }}</dd>
                             </dl>
+                            <dl class="dl-horizontal">
+                                <dt>Em. Contact:</dt>
+                                <dd>{{ $contact->emergency_contact }}</dd>
+                            </dl>
                         </div>
                     </div>
                 </div>
@@ -53,9 +57,9 @@
                 <div class="content">
                     <div class="row">
                         <div class="col-md-12">
-                            @foreach($contact->turn()->orderBy('start')->get() as $turn)
+                            @foreach($contact->turn()->orderBy('date')->get() as $turn)
                                 <a href="{{ route('turns.show', $turn) }}">
-                                    <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $turn->start)->format('d/m/Y') }}
+                                    <i class="fa fa-calendar"></i> {{ \Carbon\Carbon::createFromFormat('Y-m-d', $turn->date)->format('d/m/Y') }}
                                     <br>
                                 </a>
                             @endforeach

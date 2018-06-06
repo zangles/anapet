@@ -32,8 +32,8 @@
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="contact_id" id="contact_id">
-                                    <input type="hidden" name="start" id="start" value="{{ $turn->start }}">
-                                    <input type="hidden" name="end" id="end" value="{{ $turn->end }}">
+                                    <input type="hidden" name="date" id="date" value="{{ $turn->date }}">
+                                    <input type="hidden" name="turn_type_id" id="turn_type_id" value="{{ $turn->turn_type_id }}">
                                     <dl>
                                         <dt>Comments:</dt>
                                         <dd>
@@ -51,37 +51,22 @@
                             <div class="form-group" id="data_1">
                                 <label class="font-normal">Select Date</label>
                                 <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" id="date" class="form-control"
-                                        value="{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $turn->start)->format('Y-m-d') }}">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" id="datePick" class="form-control"
+                                        value="{{ $turn->date }}">
                                 </div>
                             </div>
                             {{--TURNS--}}
                             <div class="turnsTaken"></div>
-                            {{--HOUR--}}
-                            <div class="row">
-                                <div class="col-md-6 div-clockStart">
-                                    Start
-                                    <div class="input-group clockpicker" data-autoclose="true">
-                                        <input type="text" class="form-control" id="hour"
-                                               value="{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $turn->start)->format('H:i') }}">
-                                        <span class="input-group-addon">
-                                        <span class="fa fa-clock-o"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 div-clockEnd">
-                                    End
-                                    <div class="input-group clockpicker2" data-autoclose="true">
-                                        <input type="text" class="form-control" id="hour2"
-                                               value="{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $turn->end)->format('H:i') }}">
-                                        <span class="input-group-addon">
-                                        <span class="fa fa-clock-o"></span>
-                                        </span>
-                                    </div>
-                                </div>
+                            {{--TUTN TYPE--}}
+                            <div class="form-group" id="dateTypeDiv">
+                                <label class="font-normal">Select Type</label>
+                                <select class="form-control" id="dateType">
+                                    <option> - Select One - </option>
+                                    @foreach(\App\TurnType::all() as $turnType)
+                                        <option value="{{ $turnType->id }}" @if($turnType->id == $turn->turn_type_id) selected @endif > {{ $turnType->name }} </option>
+                                    @endforeach
+                                </select>
                             </div>
-
-
                             {{--SELECT--}}
                             <div class="form-group text-center">
                                 <br>
@@ -96,23 +81,12 @@
 @endsection
 @section('script')
     <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
-    <script src="{{ asset('js/plugins/clockpicker/clockpicker.js') }}"></script>
 
     <script>
         $('document').ready(function(){
-            clockpicker = $('.clockpicker');
-            clockpicker2 = $('.clockpicker2');
             selectDay = $('.selectDay');
             saveTurn = $(".saveTurn");
-            // selectDay.hide();
-            // saveTurn.hide();
-            clockpicker.clockpicker();
-            clockpicker2.clockpicker();
-            divStart = $('.div-clockStart');
-            divEnd = $('.div-clockEnd');
-            // divStart.hide();
-            // divEnd.hide();
-
+            dateType = $("#dateType");
 
             $('#data_1 .input-group.date').datepicker({
                 todayBtn: "linked",
@@ -168,16 +142,7 @@
             });
 
             selectDay.click(function(){
-                hourStart = $("#hour").val();
-                hourEnd = $("#hour2").val();
-                date = $("#date").val();
-
-                $("#start").val(date+ ' ' +hourStart+':00');
-                $("#end").val(date+ ' ' +hourEnd+':00');
-
-                $(".turnDate").html('<h2><strong>' + date + " " + hourStart + ' - ' + hourEnd + ' Hs </strong></h2>');
-                saveTurn.show();
-                return false;
+                selectinDate();
             });
 
 
@@ -198,9 +163,19 @@
                 return false;
             });
 
-
             selectContact('{{ $turn->contact->id }}');
         });
+
+        function selectinDate() {
+            date = $("#datePick").val();
+
+            $('#turn_type_id').val(dateType.val());
+            $('#date').val(date);
+
+            turnType = $("#dateType option:selected").text();
+            $(".turnDate").html('<h2><strong>' + date + " " + turnType + ' ' + '</strong></h2>');
+            saveTurn.show();
+        }
 
         function selectContact (id) {
             element = $('#contact_'+id);
@@ -212,5 +187,4 @@
 @endsection
 @section('css')
     <link href="{{ asset('css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/plugins/clockpicker/clockpicker.css') }}" rel="stylesheet">
 @endsection

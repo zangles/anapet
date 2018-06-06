@@ -11,7 +11,8 @@ class Contact extends Model
         'email',
         'address',
         'phone',
-        'description'
+        'description',
+        'emergency_contact'
     ];
 
     public function turn()
