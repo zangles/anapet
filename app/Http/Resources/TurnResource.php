@@ -18,7 +18,7 @@ class TurnResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->turnType->name . ' Hs - ' .$this->contact->name,
+            'title' => $this->turnType->name . ' - ' .$this->contact->name,
             'url' => route('turns.show', $this),
             'class' => TurnType::getTurnClass($this->turn_type_id),
             'start' => Carbon::createFromFormat('Y-m-d', $this->date)->getTimestamp() * 1000,
