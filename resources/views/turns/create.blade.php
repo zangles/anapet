@@ -67,9 +67,9 @@
                                 </select>
                             </div>
                             {{--REPEAT--}}
-                            <div class="checkbox">
+                            <div class="checkbox" id="repeatCheckDiv">
                                 <label>
-                                    <input type="checkbox" class="repeatCheck"> Repeat
+                                    <input type="checkbox" class="repeatCheck i-checks" > Repeat
                                 </label>
                             </div>
                             <div class="form-group" id="repeatDiv">
@@ -90,6 +90,7 @@
 @endsection
 @section('script')
     <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 
     <script>
         $('document').ready(function(){
@@ -99,21 +100,31 @@
             saveTurn = $(".saveTurn");
             dateTypeDiv = $("#dateTypeDiv");
             dateType = $("#dateType");
+            repeatCheckDiv = $("#repeatCheckDiv");
             repeatDiv = $("#repeatDiv");
             repeat = $("#repeat");
             repeatDiv.hide();
+            repeatCheckDiv.hide();
             dateTypeDiv.hide();
             selectDay.hide();
             saveTurn.hide();
 
-            $( ".repeatCheck" ).click(function(){
-                if ($(this).prop('checked')) {
-                    repeatDiv.show();
-                } else {
-                    selectinDate();
-                    repeatDiv.hide();
-                    repeat.val('');
-                }
+            $(document).ready(function () {
+                $('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
+            });
+
+
+            $('.repeatCheck').on('ifChecked', function(event){
+                repeatDiv.show();
+            });
+
+            $('.repeatCheck').on('ifUnchecked', function(event){
+                selectinDate();
+                repeatDiv.hide();
+                repeat.val('');
             });
 
             $('#data_1 .input-group.date').datepicker({
@@ -143,6 +154,7 @@
                     taken.append('<hr>');
 
                     dateTypeDiv.show();
+                    repeatCheckDiv.show();
                 });
             });
 
@@ -210,4 +222,5 @@
 @endsection
 @section('css')
     <link href="{{ asset('css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/iCheck/custom.css') }}" rel="stylesheet">
 @endsection
