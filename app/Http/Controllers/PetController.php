@@ -38,8 +38,7 @@ class PetController extends Controller
     public function store(Request $request)
     {
         $pet = new Pet();
-        $contact = Contact::find($request->input('contact_id'))->get()->first();
-
+        $contact = Contact::where('id', $request->input('contact_id'))->get()->first();
         $pet->name = $request->input('name');
         $pet->sex = $request->input('sex') ? 'M' : 'F';
         $pet->desexed = $request->input('desexed') ? 'Y' : 'N';
