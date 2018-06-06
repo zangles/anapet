@@ -29,12 +29,12 @@ class HomeController extends Controller
         $totalTurns = Turn::all()->count();
         $totalContacts = Contact::all()->count();
 
-        $twoMonth = Carbon::now()->firstOfMonth()->subMonth(2)->format('Y-m-d H:i:s');
-        $oneMonth = Carbon::now()->firstOfMonth()->subMonth(1)->format('Y-m-d H:i:s');
-        $startMonth = Carbon::now()->firstOfMonth()->format('Y-m-d H:i:s');
+        $twoMonth = Carbon::now()->firstOfMonth()->subMonth(2)->format('Y-m-d');
+        $oneMonth = Carbon::now()->firstOfMonth()->subMonth(1)->format('Y-m-d');
+        $startMonth = Carbon::now()->firstOfMonth()->format('Y-m-d');
 
-        $totalTurns2Month = Turn::whereBetween('start', [$twoMonth, $oneMonth])->count();
-        $totalTurns1Month = Turn::whereBetween('start', [$oneMonth, $startMonth])->count();
+        $totalTurns2Month = Turn::whereBetween('date', [$twoMonth, $oneMonth])->count();
+        $totalTurns1Month = Turn::whereBetween('date', [$oneMonth, $startMonth])->count();
 
         if ($totalTurns2Month != 0) {
             $incrementoTurnos = $totalTurns1Month - $totalTurns2Month;
