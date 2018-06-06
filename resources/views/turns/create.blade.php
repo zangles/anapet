@@ -31,13 +31,13 @@
                                 <form action="{{ route('turns.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="contact_id" id="contact_id">
-                                    <input type="hidden" name="start" id="start">
-                                    <input type="hidden" name="end" id="end">
+                                    <input type="hidden" name="date" id="date">
+                                    <input type="hidden" name="repeat" id="repeat">
+                                    <input type="hidden" name="turn_type_id" id="turn_type_id">
                                     <dl>
                                         <dt>Comments:</dt>
                                         <dd>
                                             <textarea name="comments" id="" cols="30" rows="10" class="form-control"></textarea>
-
                                         </dd>
                                     </dl>
                                     <button class="btn btn-primary saveTurn" style="width: 90%"> Save Turn</button>
@@ -51,34 +51,31 @@
                             <div class="form-group" id="data_1">
                                 <label class="font-normal">Select Date</label>
                                 <div class="input-group date">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" id="date" class="form-control" value="">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" id="datePick" class="form-control" value="">
                                 </div>
                             </div>
                             {{--TURNS--}}
                             <div class="turnsTaken"></div>
-                            {{--HOUR--}}
-                            <div class="row">
-                                <div class="col-md-6 div-clockStart">
-                                    Start
-                                    <div class="input-group clockpicker" data-autoclose="true">
-                                        <input type="text" class="form-control" id="hour">
-                                        <span class="input-group-addon">
-                                        <span class="fa fa-clock"></span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 div-clockEnd">
-                                    End
-                                    <div class="input-group clockpicker2" data-autoclose="true">
-                                        <input type="text" class="form-control" id="hour2">
-                                        <span class="input-group-addon">
-                                        <span class="fa fa-clock"></span>
-                                        </span>
-                                    </div>
-                                </div>
+                            {{--TURN TYPE--}}
+                            <div class="form-group" id="dateTypeDiv">
+                                <label class="font-normal">Select Type</label>
+                                <select class="form-control" id="dateType">
+                                    <option> - Select One - </option>
+                                    @foreach(\App\TurnType::all() as $turnType)
+                                        <option value="{{ $turnType->id }}"> {{ $turnType->name }} </option>
+                                    @endforeach
+                                </select>
                             </div>
-
-
+                            {{--REPEAT--}}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" class="repeatCheck"> Repeat
+                                </label>
+                            </div>
+                            <div class="form-group" id="repeatDiv">
+                                <label class="font-normal">For Days</label>
+                                <input type="number" class="form-control"  name="" id="repeatDay" value="1">
+                            </div>
                             {{--SELECT--}}
                             <div class="form-group text-center">
                                 <br>
@@ -93,7 +90,6 @@
 @endsection
 @section('script')
     <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
-    <script src="{{ asset('js/plugins/clockpicker/clockpicker.js') }}"></script>
 
     <script>
         $('document').ready(function(){
@@ -101,15 +97,24 @@
             clockpicker2 = $('.clockpicker2');
             selectDay = $('.selectDay');
             saveTurn = $(".saveTurn");
+            dateTypeDiv = $("#dateTypeDiv");
+            dateType = $("#dateType");
+            repeatDiv = $("#repeatDiv");
+            repeat = $("#repeat");
+            repeatDiv.hide();
+            dateTypeDiv.hide();
             selectDay.hide();
             saveTurn.hide();
-            clockpicker.clockpicker();
-            clockpicker2.clockpicker();
-            divStart = $('.div-clockStart');
-            divEnd = $('.div-clockEnd');
-            divStart.hide();
-            divEnd.hide();
 
+            $( ".repeatCheck" ).click(function(){
+                if ($(this).prop('checked')) {
+                    repeatDiv.show();
+                } else {
+                    selectinDate();
+                    repeatDiv.hide();
+                    repeat.val('');
+                }
+            });
 
             $('#data_1 .input-group.date').datepicker({
                 todayBtn: "linked",
@@ -120,7 +125,7 @@
                 format:'yyyy-mm-dd'
             });
 
-            $("#date").change(function(){
+            $("#datePick").change(function(){
                 fromDate = new Date($(this).val()).getTime();
                 toDate = fromDate + (60 * 60 * 24 * 1000);
 
@@ -136,46 +141,20 @@
                         });
                     }
                     taken.append('<hr>');
-                    divStart.show();
-                    divEnd.show();
+
+                    dateTypeDiv.show();
                 });
             });
 
-            $("#hour").change(function(){
-                hourStart = $(this).val();
-                hourEnd = $("#hour2").val();
-
-                if (hourStart !== '' && hourEnd !== '') {
-                    date = $("#date").val();
-                    selectDay.html('Select Day '+ date + " "+ hourStart + ' - ' + hourEnd);
-                    selectDay.show();
-                }
-
-            });
-
-            $("#hour2").change(function(){
-                hourStart = $("#hour").val();
-                hourEnd = $(this).val();
-
-                if (hourStart !== '' && hourEnd !== '') {
-                    date = $("#date").val();
-                    selectDay.html('Select Day '+date + " "+ hourStart + ' - ' + hourEnd);
-                    selectDay.show();
-                }
+            dateType.change(function() {
+                selectDay.show();
             });
 
             selectDay.click(function(){
-                hourStart = $("#hour").val();
-                hourEnd = $("#hour2").val();
-                date = $("#date").val();
-
-                $("#start").val(date+ ' ' +hourStart+':00');
-                $("#end").val(date+ ' ' +hourEnd+':00');
-
-                $(".turnDate").html('<h2><strong>' + date + " " + hourStart + ' - ' + hourEnd + ' Hs </strong></h2>');
-                saveTurn.show();
+                selectinDate();
                 return false;
             });
+
 
 
             $('#top-search').keyup(function(){
@@ -202,6 +181,25 @@
             @endif
         });
 
+        function selectinDate() {
+            date = $("#datePick").val();
+
+            $('#turn_type_id').val(dateType.val());
+            $('#date').val(date);
+
+            repeatText = '';
+            if ($(".repeatCheck").prop('checked')) {
+                days = $("#repeatDay").val();
+                repeat.val(days);
+                repeatText = 'For ' + days + ' days';
+            }
+
+
+            turnType = $("#dateType option:selected").text();
+            $(".turnDate").html('<h2><strong>' + date + " " + turnType + ' ' + repeatText + '</strong></h2>');
+            saveTurn.show();
+        }
+
         function selectContact (id) {
             element = $('#contact_'+id);
             $("#contact_id").val($(element).data('id'));
@@ -212,5 +210,4 @@
 @endsection
 @section('css')
     <link href="{{ asset('css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/plugins/clockpicker/clockpicker.css') }}" rel="stylesheet">
 @endsection

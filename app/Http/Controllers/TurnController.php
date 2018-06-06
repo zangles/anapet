@@ -18,18 +18,18 @@ class TurnController extends Controller
     public function index(Request $request)
     {
         if ($request->input('from') !== null) {
-            $start = Carbon::createFromTimestampMs($request->input('from'))->format('Y-m-d H:i:s');
+            $start = Carbon::createFromTimestampMs($request->input('from'))->format('Y-m-d');
         } else {
             $start = new Carbon('first day of this month');
         }
 
         if ($request->input('to') !== null) {
-            $end = Carbon::createFromTimestampMs($request->input('to'))->format('Y-m-d H:i:s');
+            $end = Carbon::createFromTimestampMs($request->input('to'))->format('Y-m-d');
         } else {
             $end = new Carbon('first day of next month');
         }
 
-        $turns = Turn::whereBetween('start', [$start, $end])->orderBy('start')->get();
+        $turns = Turn::whereBetween('date', [$start, $end])->orderBy('date')->get();
         $turnsCollection = TurnResource::collection($turns);
         return view('turns.index', compact('turnsCollection','request'));
     }
@@ -54,11 +54,25 @@ class TurnController extends Controller
      */
     public function store(Request $request)
     {
-        $turn = new Turn();
-        $turn->fill($request->all());
-        $turn->save();
-        $request->session()->flash('message', 'success|Turn Created!');
+        if ($request->input('repeat') != null) {
+            $date = Carbon::createFromFormat('Y-m-d', $request->input('date'));
+            for ($i = 0; $i < $request->input('repeat'); $i++) {
+                $turn = factory(Turn::class)->create([
+                   'contact_id' => $request->input('contact_id'),
+                   'comments' => $request->input('comments'),
+                   'turn_type_id' => $request->input('turn_type_id'),
+                   'date' => $date,
+                ]);
 
+                $date->addDay(1);
+            }
+            $request->session()->flash('message', 'success|Turn Created!');
+        } else {
+            $turn = new Turn();
+            $turn->fill($request->all());
+            $turn->save();
+            $request->session()->flash('message', 'success|Turn Created!');
+        }
         return redirect()->route('turns.index');
     }
 
@@ -124,10 +138,10 @@ class TurnController extends Controller
      */
     public function turns(Request $request)
     {
-        $start = Carbon::createFromTimestampMs($request->input('from'))->format('Y-m-d H:i:s');
-        $end = Carbon::createFromTimestampMs($request->input('to'))->format('Y-m-d H:i:s');
+        $start = Carbon::createFromTimestampMs($request->input('from'))->format('Y-m-d');
+        $end = Carbon::createFromTimestampMs($request->input('to'))->format('Y-m-d');
 
-        $turns = Turn::whereBetween('start', [$start, $end])->get();
+        $turns = Turn::whereBetween('date', [$start, $end])->get();
         $turnsCollection = TurnResource::collection($turns);
         return response()->json(
             (object)[

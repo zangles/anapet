@@ -27,9 +27,19 @@
                                     <label for="phone">Phone</label>
                                     <input type="text" name="phone" class="form-control" id="phone" placeholder="Phone">
                                 </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea name="description" id="description" class="form-control" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="description">Emergency Contact</label>
+                                            <textarea name="emergency_contact" id="emergency_contact" class="form-control" cols="30" rows="10"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                         </div>
                     </div>

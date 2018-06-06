@@ -16,7 +16,17 @@
 </div>
 <hr>
 <div id="calendar"></div>
-
+<div>
+    <hr>
+    <h3>References</h3>
+    <ul class="list-inline">
+        @foreach(\App\TurnType::all() as $turnType)
+            <li class="list-inline-item">
+                <a href="#" class="pull-left event {{ \App\TurnType::getTurnClass($turnType->id) }}" data-toggle="tooltip" title=""></a>{{$turnType->name}}
+            </li>
+        @endforeach
+    </ul>
+</div>
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/plugins/boostrap-calendar/calendar.css') }}">
 @endsection

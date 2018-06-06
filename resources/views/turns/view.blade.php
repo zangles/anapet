@@ -36,12 +36,12 @@
                     <div class="row">
                         <div class="col-md-12">
                             <dl class="dl-horizontal">
-                                <dt>Start:</dt>
-                                <dd>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$turn->start)->format('d/m/Y H:i') }} Hs</dd>
+                                <dt>Date:</dt>
+                                <dd>{{ \Carbon\Carbon::createFromFormat('Y-m-d',$turn->date)->format('d/m/Y') }} Hs</dd>
                             </dl>
                             <dl class="dl-horizontal">
-                                <dt>End:</dt>
-                                <dd>{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$turn->end)->format('d/m/Y H:i') }} Hs</dd>
+                                <dt>Type:</dt>
+                                <dd>{{ $turn->turnType->name }}</dd>
                             </dl>
                             <dl class="dl-horizontal">
                                 <dt>Comments:</dt>

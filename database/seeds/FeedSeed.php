@@ -46,13 +46,10 @@ class FeedSeed extends Seeder
 
             $date = $faker->dateTimeBetween('-2 mouth', '+ 60 days')->format('Y-m-d H:i:s');
 
-            $start = Carbon::createFromFormat('Y-m-d H:i:s', $date);
-            $end = $start->addHours($faker->randomDigit());
-
             $turns[] = Turn::create([
                 'contact_id' =>  Contact::orderBy(DB::raw('RAND()'))->get()->first()->id,
-                'start' => $start,
-                'end' => $end,
+                'date' => $date,
+                'turn_type_id' => $faker->randomElement([1,2,3,4])
             ]);
         }
 
