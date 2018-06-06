@@ -18,9 +18,14 @@ class adminUserSeed extends Seeder
             'password' => \Hash::make('septiembre08')
         ]);
         factory(User::class)->create([
-            'name' => 'anako',
-            'email' => 'anako@gmail.com',
-            'password' => \Hash::make('anako')
+            'name' => 'Anako',
+            'email' => 'anabelw@gmail.com',
+            'password' => \Hash::make('p1xk3n')
+        ]);
+        factory(User::class)->create([
+            'name' => 'Kendolf',
+            'email' => 'werekendolf@gmail.com',
+            'password' => \Hash::make('p1xk3n')
         ]);
     }
 }
