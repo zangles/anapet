@@ -92,8 +92,10 @@
                 todayBtn: "linked",
                 keyboardNavigation: false,
                 forceParse: false,
-                calendarWeeks: true,
+                calendarWeeks: false,
                 autoclose: true,
+                startDate: "yesterday",
+                todayHighlight: true,
                 format:'yyyy-mm-dd'
             });
 
