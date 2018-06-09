@@ -29,7 +29,8 @@ class TurnController extends Controller
             $end = new Carbon('first day of next month');
         }
 
-        $turns = Turn::whereBetween('date', [$start, $end])->orderBy('date')->get();
+        $turns = Turn::join('turn_types', 'turn_type_id', '=', 'turn_types.id')->whereBetween('date', [$start, $end])->orderBy('date')->orderBy('turn_types.orden')->get();
+
         $turnsCollection = TurnResource::collection($turns);
         return view('turns.index', compact('turnsCollection','request'));
     }
