@@ -33,7 +33,7 @@
                                     <input type="hidden" name="contact_id" id="contact_id">
                                     <input type="hidden" name="date" id="date">
                                     <input type="hidden" name="repeat" id="repeat">
-                                    <input type="show" name="turn_type_id" id="turn_type_id">
+                                    <input type="hidden" name="turn_type_id" id="turn_type_id">
                                     <dl>
                                         <dt>Comments:</dt>
                                         <dd>
