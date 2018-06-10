@@ -16,14 +16,24 @@ class TurnResource extends JsonResource
      */
     public function toArray($request)
     {
+        $start = Carbon::createFromFormat('Y-m-d', $this->date)->midDay()->getTimestamp() * 1000;
+        $title = $this->turnType->name . ' - ' .$this->contact->name;
+        if ($this->turn_type_id == 6) {
+            $end = Carbon::createFromFormat('Y-m-d', $this->date)->midDay()->addHours(24)->getTimestamp() * 1000;
+            $title = Carbon::createFromFormat('Y-m-d', $this->date)->format('Y-m-d') . ' - ' . $this->turnType->name . ' - ' .$this->contact->name;
+        } else {
+            $end = Carbon::createFromFormat('Y-m-d', $this->date)->midDay()->addHours(1)->getTimestamp() * 1000;
+        }
+
         return [
             'id' => $this->id,
-            'title' => $this->turnType->name . ' - ' .$this->contact->name,
+            'title' => $title,
             'url' => route('turns.show', $this),
             'class' => TurnType::getTurnClass($this->turn_type_id),
-            'start' => Carbon::createFromFormat('Y-m-d', $this->date)->midDay()->getTimestamp() * 1000,
-            'end' => Carbon::createFromFormat('Y-m-d', $this->date)->midDay()->addHours(1)->getTimestamp() * 1000,
+            'start' => $start,
+            'end' => $end,
             'meta' => [
+                'title' => $this->turnType->name . ' - ' .$this->contact->name,
                 'date' => Carbon::createFromFormat('Y-m-d', $this->date)->format('d/m/Y'),
             ]
         ];
