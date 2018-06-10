@@ -7,6 +7,7 @@ use App\Http\Resources\TurnResource;
 use App\Turn;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TurnController extends Controller
 {
@@ -29,7 +30,14 @@ class TurnController extends Controller
             $end = new Carbon('first day of next month');
         }
 
-        $turns = Turn::join('turn_types', 'turn_type_id', '=', 'turn_types.id')->whereBetween('date', [$start, $end])->orderBy('date')->orderBy('turn_types.orden')->get();
+        $turns = Turn::with('turnType');
+        $turns = $turns
+            ->leftJoin('turn_types', 'turns.turn_type_id', '=', 'turn_types.id')
+            ->select('turns.*')
+            ->whereBetween('date', [$start,$end])
+            ->orderBy('date')
+            ->orderBy('orden')
+            ->get();
 
         $turnsCollection = TurnResource::collection($turns);
         return view('turns.index', compact('turnsCollection','request'));
@@ -58,20 +66,35 @@ class TurnController extends Controller
         if ($request->input('repeat') != null) {
             $date = Carbon::createFromFormat('Y-m-d', $request->input('date'));
             for ($i = 0; $i < $request->input('repeat'); $i++) {
-                $turn = factory(Turn::class)->create([
-                   'contact_id' => $request->input('contact_id'),
-                   'comments' => $request->input('comments'),
-                   'turn_type_id' => $request->input('turn_type_id'),
-                   'date' => $date,
-                ]);
+
+                $turnTypes = explode(',',$request->input('turn_type_id'));
+
+                foreach ($turnTypes as $turnType) {
+                    $turn = factory(Turn::class)->create([
+                        'contact_id' => $request->input('contact_id'),
+                        'comments' => $request->input('comments'),
+                        'turn_type_id' => $turnType,
+                        'date' => $date,
+                    ]);
+                }
+
 
                 $date->addDay(1);
             }
             $request->session()->flash('message', 'success|Turn Created!');
         } else {
-            $turn = new Turn();
-            $turn->fill($request->all());
-            $turn->save();
+            $turnTypes = explode(',',$request->input('turn_type_id'));
+            $date = Carbon::createFromFormat('Y-m-d', $request->input('date'));
+
+            foreach ($turnTypes as $turnType) {
+                $turn = factory(Turn::class)->create([
+                    'contact_id' => $request->input('contact_id'),
+                    'comments' => $request->input('comments'),
+                    'turn_type_id' => $turnType,
+                    'date' => $date,
+                ]);
+            }
+
             $request->session()->flash('message', 'success|Turn Created!');
         }
         return redirect()->route('turns.index');
@@ -142,7 +165,15 @@ class TurnController extends Controller
         $start = Carbon::createFromTimestampMs($request->input('from'))->format('Y-m-d');
         $end = Carbon::createFromTimestampMs($request->input('to'))->format('Y-m-d');
 
-        $turns = Turn::whereBetween('date', [$start, $end])->get();
+        $turns = Turn::with('turnType');
+        $turns = $turns
+            ->leftJoin('turn_types', 'turns.turn_type_id', '=', 'turn_types.id')
+            ->select('turns.*')
+            ->whereBetween('date', [$start,$end])
+            ->orderBy('date')
+            ->orderBy('orden')
+            ->get();
+
         $turnsCollection = TurnResource::collection($turns);
         return response()->json(
             (object)[

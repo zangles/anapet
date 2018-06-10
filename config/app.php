@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'AnaKo Petsit'),
 
+    'version' => '1.0.2',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

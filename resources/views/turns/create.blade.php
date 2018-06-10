@@ -33,7 +33,7 @@
                                     <input type="hidden" name="contact_id" id="contact_id">
                                     <input type="hidden" name="date" id="date">
                                     <input type="hidden" name="repeat" id="repeat">
-                                    <input type="hidden" name="turn_type_id" id="turn_type_id">
+                                    <input type="show" name="turn_type_id" id="turn_type_id">
                                     <dl>
                                         <dt>Comments:</dt>
                                         <dd>
@@ -59,8 +59,7 @@
                             {{--TURN TYPE--}}
                             <div class="form-group" id="dateTypeDiv">
                                 <label class="font-normal">Select Type</label>
-                                <select class="form-control" id="dateType">
-                                    <option> - Select One - </option>
+                                <select class="form-control" id="dateType" multiple>
                                     @foreach(\App\TurnType::all() as $turnType)
                                         <option value="{{ $turnType->id }}"> {{ $turnType->name }} </option>
                                     @endforeach
@@ -91,8 +90,11 @@
 @section('script')
     <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/chosen/chosen.jquery.js') }}"></script>
 
     <script>
+        var turnsTypeSelected = '';
+
         $('document').ready(function(){
             clockpicker = $('.clockpicker');
             clockpicker2 = $('.clockpicker2');
@@ -116,6 +118,11 @@
                 });
             });
 
+            $('#dateType').chosen({width: "100%"});
+            $("#dateType").chosen().change(function(){
+                turnsTypeSelected = $(this).val();
+                $('#turn_type_id').val(turnsTypeSelected);
+            });
 
             $('.repeatCheck').on('ifChecked', function(event){
                 repeatDiv.show();
@@ -135,14 +142,11 @@
                 autoclose: true,
                 startDate: "yesterday",
                 todayHighlight: true,
-                format:'yyyy-mm-dd'
-            });
+                format:'yyyy-mm-dd',
+            }).on('changeDate', function(e) {
+                fromDate = new Date($('#data_1 .input-group.date').datepicker('getDates')).getTime();
 
-            $("#datePick").change(function(){
-                fromDate = new Date($(this).val()).getTime();
-                toDate = fromDate + (60 * 60 * 24 * 1000);
-
-                $.getJSON('{{ route('api.turns') }}?from='+fromDate+'&to='+toDate, function(data){
+                $.getJSON('{{ route('api.turns') }}?from='+fromDate+'&to='+fromDate, function(data){
                     taken = $(".turnsTaken");
                     if (data.result.length === 0){
                         taken.html('<strong>No turns in this day</strong>');
@@ -198,7 +202,7 @@
         function selectinDate() {
             date = $("#datePick").val();
 
-            $('#turn_type_id').val(dateType.val());
+            $('#turn_type_id').val(turnsTypeSelected);
             $('#date').val(date);
 
             repeatText = '';
@@ -225,4 +229,5 @@
 @section('css')
     <link href="{{ asset('css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plugins/iCheck/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/chosen/chosen.css') }}" rel="stylesheet">
 @endsection
