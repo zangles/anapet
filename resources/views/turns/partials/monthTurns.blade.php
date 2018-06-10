@@ -12,9 +12,9 @@
             </ul>
             <li><strong>{{ $firstDate  }}</strong>
                 <ul>
-                    <li class="turnListItem"><a href="{{ $turnArray['url'] }}">{{ $turnArray['title'] }}</a></li>
+                    <li class="turnListItem"><a href="{{ $turnArray['url'] }}">{{ $turnArray['meta']['title'] }}</a></li>
         @else
-            <li class="turnListItem"><a href="{{ $turnArray['url'] }}">{{ $turnArray['title'] }}</a></li>
+            <li class="turnListItem"><a href="{{ $turnArray['url'] }}">{{ $turnArray['meta']['title'] }}</a></li>
         @endif
     @endforeach
     </li>
