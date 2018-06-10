@@ -1,7 +1,7 @@
 <div class="footer">
     <div class="pull-right" >
         <a href="#" data-toggle="modal" data-target="#myModal">
-            Version <strong>1.0.0</strong>
+            Version <strong>{{ config('app.version') }}</strong>
         </a>
     </div>
     <div>
