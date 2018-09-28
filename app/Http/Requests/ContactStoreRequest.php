@@ -24,8 +24,7 @@ class ContactStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'email' => 'email'
+            'name' => 'required'
         ];
     }
 }
