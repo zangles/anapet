@@ -230,4 +230,7 @@
     <link href="{{ asset('css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plugins/iCheck/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plugins/chosen/chosen.css') }}" rel="stylesheet">
+    <style>
+        /* Ana aca tu codigo css */
+    </style>
 @endsection
